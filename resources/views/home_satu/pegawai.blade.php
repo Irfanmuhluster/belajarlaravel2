@@ -33,8 +33,9 @@
             <div class="content">
 			  <h2>Striped Rows</h2>
 			  <p>The .table-striped class adds zebra-stripes to a table:</p>  
-			  <form id="pegawai">
-			  	@csrf
+			  <form id="pegawai" action="{{ route('public.search') }}">
+           {{-- @method('PUT') --}}
+			  	{{-- @csrf --}}
 			  	 <input type="text" name="search" placeholder="cari"  class="form-control" >
 			  	 <button type="submit" class="btn btn-primary btn-block" id="btnpegawai" data-loadingbtnkas="<i class='fa fa-circle-o-notch fa-spin'></i> Loading ...">Cari</button>
         
@@ -44,17 +45,17 @@
 			      <tr>
 			        <th>Nama Pegawai</th>
 			        <th>Jabatan</th>
-			        <th>Umur</th>
+			        <th>Tanggal Lahir</th>
 			        <th>Alamat</th>
 			      </tr>
 			    </thead>
 			    <tbody>
-			    @forelse($listpegawai as $pegawai)
+			    @forelse($pegawai as $d)
 			      <tr>
-			        <td>{{ $pegawai->nama_pegawai }}</td>
-			        <td>{{ $pegawai->jabatan }}</td>
-			        <td>{{ $pegawai->umur }}</td>
-			        <td>{{ $pegawai->alamat }}</td>
+			        <td>{{ $d->nama_pegawai }}</td>
+			        <td>{{ $d->jabatan }}</td>
+			        <td>{{ showDateTime($d->tanggallahir, 'l, d F Y') }}</td>
+			        <td>{{ $d->alamat }}</td>
 			      </tr>
 			     @empty
 			     <tr>
@@ -65,28 +66,27 @@
 			      
 			    </tbody>
 			  </table>
+        {{ $pegawai->links() }}
 			</div>
 
-
+{{-- {{ route('public.search', ":search") }} --}}
         </div>
     </body>
 </html>
 <script type="text/javascript">
-let form = document.getElementById('pegawai');
-form.addEventListener('submit', e => {
+// let form = document.getElementById('pegawai');
+// form.addEventListener('submit', e => {
   
-  let element = event.target;
-  // document.getElementById("datepickerkasbtn").innerHTML = document.getElementById("datepickerkasbtn").dataset.loadingbtnkas;
-  // document.getElementById("datepickerkasbtn").setAttribute("disabled","disabled"); 
-  e.preventDefault();
-  const formdata = new FormData(form);
-  let search = formdata.get('search');
-  let value = "{{ route('public.search', ":search") }}"
-  let url = value.replace(':search', search)
-  fetch(`${url}`)
-    .then(response => response.json())
-    .then(data => console.log(JSON.stringify(data))
-    ).catch((err)=>console.log(err))
-  });
+//   let element = event.target;
+//   e.preventDefault();
+//   const formdata = new FormData(form);
+//   let search = formdata.get('search');
+  // let value = ""
+//   let url = value.replace(':search', search)
+//   fetch(`${url}`)
+//     .then(response => response.json())
+//     .then(data => console.log(JSON.stringify(data))
+//     ).catch((err)=>console.log(err))
+//   });
 
 </script>

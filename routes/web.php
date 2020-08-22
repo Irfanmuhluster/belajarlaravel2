@@ -15,4 +15,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/pegawai', 'HomeController@index')->name('public.pegawai');
-Route::get('/pegawai/{search}', 'HomeController@search')->name('public.search');
+Route::get('/pegawai/cari', 'HomeController@search')->name('public.search');
